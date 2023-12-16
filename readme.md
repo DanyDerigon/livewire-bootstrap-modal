@@ -27,7 +27,7 @@ This package allows you to dynamically show your Laravel Livewire 3 components i
 Require the package:
 
 ```console
-composer require aliqasemzadeh/livewire-bootstrap-modal
+composer require danyderigon/livewire-bootstrap-modal
 ```
 
 Add the `livewire:modals` component to your app layout view:
@@ -75,8 +75,8 @@ Make a Livewire component you want to show as a modal. The view for this compone
 Show a modal by emitting the `showModal` event with the component alias:
 
 ```html
-<button type="button" wire:click="$dispatch('showModal', {'alias' => 'modalName'})">
-    {{ __('Update Profile') }}
+<button type="button" wire:click="$dispatch('showModal', {alias: 'modals.create-post'})">
+    {{ __('Create post') }}
 </button>
 ```
 
@@ -85,31 +85,31 @@ Show a modal by emitting the `showModal` event with the component alias:
 Pass parameters to the component `mount` method after the alias:
 
 ```html
-<button type="button"wire:click="$dispatch('showModal', {'alias' => 'modalName', 'params' => {'name' => 'test'}})">
-    {{ __('Update User #' . $user->id) }}
+<button type="button"wire:click="$dispatch('showModal', {alias: 'modals.update-post', params: {id: {{$post->id}} }})">
+    {{ __('Update Post #' . $post->id) }}
 </button>
 ```
 
 The component `mount` method for the example above would look like this: 
 
 ```php
-namespace App\Http\Livewire\Users;
+namespace App\Http\Livewire\Modals;
 
-use App\Models\User;
+use App\Models\Post;
 use Livewire\Component;
 
-class Update extends Component
+class UpdatePost extends Component
 {
-    public $user;
+    public $post;
     
-    public function mount(User $user)
+    public function mount(int $id)
     {
-        $this->user = $user;
+        $this->post = Post::find($id);
     }
     
     public function render()
     {
-        return view('users.update');
+        return view('modals.update-post');
     }
 }
 ```

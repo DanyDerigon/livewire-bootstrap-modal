@@ -9,14 +9,10 @@ modalsElement.addEventListener('hidden.bs.modal', () => {
 Livewire.on('showBootstrapModal', (e) => {
     let modal = Modal.getOrCreateInstance(modalsElement)
     modal.show();
-  
 });
 
 Livewire.on('hideModal', () => {
     let modal = Modal.getInstance(modalsElement);
     modal.hide();
-   ;
     Livewire.dispatch('resetModal');
-
-
 });
